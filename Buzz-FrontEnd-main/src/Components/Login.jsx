@@ -26,6 +26,7 @@ export default function Login() {
   const onLoginSuccess = (res) => {
     navigate('/feeds');
     console.log('Login Successful', res.profileObj)
+
     setshowLoginButton(false);
     setshowLogoutButton(true);
   }
@@ -70,6 +71,7 @@ export default function Login() {
           </CardContent>
 
           <CardActions>
+            
             {showLoginButton ? <GoogleLogin
               clientId={clientId}
               buttonText="Sign In"
@@ -77,7 +79,6 @@ export default function Login() {
               onFailure={onLoginFailure}
               cookiePolicy={'single_host_origin'}
             /> : null}
-
 
             {showLogoutButton ? <GoogleLogout
               clientId={clientId}
@@ -124,3 +125,5 @@ export default function Login() {
     </div>
   );
 }
+
+//@vikrant
