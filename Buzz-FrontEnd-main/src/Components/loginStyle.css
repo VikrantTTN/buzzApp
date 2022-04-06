@@ -1,0 +1,14 @@
+.loginWrapper{
+    display: flex;
+    justify-content: space-around;
+}
+
+.loginCard , .imgCard {
+    width: 25vw;
+    margin-top: 15rem;
+}
+
+.ttn-img > img{
+    width: 50%;
+    margin-left: 8vw;
+}
