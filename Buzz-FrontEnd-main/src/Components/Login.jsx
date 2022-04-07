@@ -43,7 +43,8 @@ export default function Login() {
   const handleClick = async () => {
     console.log(email, password);
     if (email && password) {
-      let res = await axios.post('/login', { email: email, password: password });
+      
+      const res = await axios.post('/login', { email: email, password: password });
       if (res.data.message === "Logged in" && res.status === 200) {
         navigate('/feeds');
       } else {
