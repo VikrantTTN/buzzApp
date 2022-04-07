@@ -8,23 +8,46 @@ import TextField from '@mui/material/TextField';
 import LoginStyle from './loginStyle.css';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import TTN from '../Assests/TTN-logo.jpg'
+import TTN from '../Assests/TTN-logo.jpg';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { GoogleLogout, GoogleLogin } from 'react-google-login'
 
 export default function Login() {
 
-  const clientId = '633922253147-04l402ifr80bgmvr5hqv50204tvb9al0.apps.googleusercontent.com';
+  const clientId = '946639695090-3haoin5ecegqqu7og3blv1jnt7kt6dgc.apps.googleusercontent.com';
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [showLoginButton, setshowLoginButton] = React.useState(true);
   const [showLogoutButton, setshowLogoutButton] = React.useState(false);
 
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = async (res) => {
     navigate('/feeds');
-    console.log('Login Successful', res.profileObj)
+    console.log('Login Successful', res.profileObj);
+    try {    
+      const result = await axios.post("/auth/google",{
+      token: res.tokenId});
+  const data = await result.json();
+  console.log('data--------', data);
+  // store returned user somehow
+    } catch (error) {
+      console.log('error==========', error)
+      
+    }
+
+    // try {
+    //   const { name, email, googleId } = res.profileObj;
+    //   let result = await axios.post('/signup' , { name ,email, googleId });
+    //   if(result.status===200){
+    //     window.alert("Signup success");
+    //     navigate('/login')
+    //   }else{
+    //     window.alert("fill all details")
+    //   }
+    // } catch (error) {
+    //   console.log('error==========', error)
+    // }
 
     setshowLoginButton(false);
     setshowLogoutButton(true);
@@ -73,7 +96,7 @@ export default function Login() {
             
             {showLoginButton ? <GoogleLogin
               clientId={clientId}
-              buttonText="Sign In"
+              buttonText="Log in with Google"
               onSuccess={onLoginSuccess}
               onFailure={onLoginFailure}
               cookiePolicy={'single_host_origin'}

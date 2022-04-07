@@ -1,6 +1,8 @@
 const express = require('express');
 const userRouter = express.Router();
-const {signupUser , loginUser} = require('../Controller/userController');
+const { signupUser, loginUser, googleSignIn } = require('../Controller/userController');
+
+userRouter.post("/auth/google", googleSignIn);
 
 userRouter
     .route('/signup')
