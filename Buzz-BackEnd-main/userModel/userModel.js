@@ -44,7 +44,7 @@ userSchema.pre('save',function(){
 
 //model
 
-const userModel = mongoose.model('userModel' , userSchema , "User");
+const userModel = mongoose.model('userModel' , userSchema , "Buzz Users");
 
 
 module.exports = userModel
