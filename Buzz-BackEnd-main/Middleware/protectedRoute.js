@@ -26,7 +26,8 @@ async function protectedRoute(req, res, next) {
             }
     
         } else {
-            res.send('Not_Authorized')
+            res.status(401)
+            res.send('UnAuthorized');
         }
     }catch(err){
         res.status(500).json({

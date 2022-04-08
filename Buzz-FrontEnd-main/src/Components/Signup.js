@@ -49,8 +49,8 @@ function Signup() {
                         {/* {error && <Alert severity="error" margin='dense' >{error}</Alert>} */}
                         <TextField id="outlined-basic" label="Full Name " variant="outlined" fullWidth={true} margin='normal' size='small' value={name} onChange={(e) => setName(e.target.value)} />
                         <TextField id="outlined-basic" label="Email" variant="outlined" fullWidth={true} margin='normal' size='small' value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <TextField id="outlined-basic" label="Password" variant="outlined" fullWidth={true} margin='normal' size='small' value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <TextField id="outlined-basic" label="Confirm Password" variant="outlined" fullWidth={true} margin='normal' size='small' value={confirmPassword} onChange={(e) => setconfirmPassword(e.target.value)} />
+                        <TextField id="outlined-basic" label="Password" variant="outlined" fullWidth={true} margin='normal' size='small' input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <TextField id="outlined-basic" label="Confirm Password" variant="outlined" fullWidth={true} margin='normal' size='small' input type="password" value={confirmPassword} onChange={(e) => setconfirmPassword(e.target.value)} />
 
                     </CardContent>
                     <CardActions>

@@ -59,14 +59,29 @@ async function loginUser(req, res) {
 
 
 async function getuser(req , res){
-    console.log(req.cookies);
+    let id = req.id;
+    console.log(id);
+    let user = await userModel.findOne({id});
+    console.log(user);
     console.log("get user called");
-    res.send("get user");
+    res.json({
+        message : user
+    });
 }
+
+function logout(req , res){
+    res.cookie('login','',{maxAge:1})
+    res.status(301).redirect("/");
+    res.json({
+        message:'logged out success '
+    })
+}
+
 
 module.exports = {
     signupUser,
     loginUser,
     getuser,
+    logout
 }
 

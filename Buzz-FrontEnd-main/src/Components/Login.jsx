@@ -102,7 +102,7 @@ export default function Login() {
               Login To Your Account
             </Typography>
             <TextField id="standard-basic" label="TTN Username" variant="standard" fullWidth={true} margin='normal' size='small' value={email} onChange={(e) => setEmail(e.target.value)} />
-            <TextField id="standard-basic" label="Password" variant="standard" fullWidth={true} margin='normal' size='small' value={password} onChange={(e) => setPassword(e.target.value)} />
+            <TextField id="standard-basic" label="Password" variant="standard" fullWidth={true} margin='normal' size='small' input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <FormControlLabel control={<Checkbox color="secondary" />} label="Remember me" />
             <Typography varient="subtitle1" margin='dense' sx={{ display: 'inline-block', marginLeft: "7vw", marginTop: '2vh' }}>
               Forget Password ?
