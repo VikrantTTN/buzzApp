@@ -28,8 +28,8 @@ export default function Login() {
     try {    
       const result = await axios.post("/auth/google",{
       token: res.tokenId});
-  const data = await result.json();
-  console.log('data--------', data);
+  // const data = await result.json();
+  console.log('data--------', result);
   // store returned user somehow
     } catch (error) {
       console.log('error==========', error)

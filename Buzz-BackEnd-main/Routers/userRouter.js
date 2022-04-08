@@ -13,10 +13,8 @@ userRouter
 .route('/login')
 .post(loginUser)
 
-userRouter.use(protectedRoute)
 userRouter
-.route('/feeds')
-.get(getuser)
+.get('/feeds',protectedRoute,getuser);
 
 
 

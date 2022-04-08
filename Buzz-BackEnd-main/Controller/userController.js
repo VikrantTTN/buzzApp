@@ -44,7 +44,11 @@ async function googleSignIn(req, res) {
             audience: process.env.CLIENT_ID
         });
         const { name, email, sub } = ticket.getPayload();
-        await userModel.findOneAndUpdate({ email }, { name, googleId: sub });
+        const user = await userModel.findOneAndUpdate({ email }, { name, googleId: sub },{upsert:true});
+        console.log(user);
+        const uid = user["_id"];
+        const jwtToken = jwt.sign({payload:uid},JWT_KEY);
+        res.cookie("login",jwtToken)
         return res.status(201).json({ name, email, googleId: sub });
     } catch (error) {
         console.log('Error occurred', error);
@@ -97,7 +101,7 @@ async function getuser(req , res){
 
 function logout(req , res){
     res.cookie('login','',{maxAge:1})
-    res.status(301).redirect("/");
+    
     res.json({
         message:'logged out success '
     })
