@@ -1,5 +1,7 @@
 const userModel = require('../userModel/userModel');
 const { OAuth2Client } = require('google-auth-library');
+const jwt = require('jsonwebtoken');
+const JWT_KEY = "kmwnwiniei322in7377342dcd3";
 
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
@@ -54,14 +56,14 @@ async function googleSignIn(req, res) {
 async function loginUser(req, res) {
     console.log("Login called");
     try {
-        let data = req.body;
+        const data = req.body;
         if (data.email) {
-            let user = await userModel.findOne({ email: data.email });
+            const user = await userModel.findOne({ email: data.email });
             if (user) {
                 if (user.password === data.password) {
-                    // let uid = user["_id"];
-                    // let token = jwt.sign({payload:uid},JWT_KEY);
-                    // res.cookie("login" ,token)
+                    const uid = user["_id"];
+                    const token = jwt.sign({payload:uid},JWT_KEY);
+                    res.cookie("login",token)
                     res.json({
                         message: "Logged in"
                     })
@@ -81,9 +83,17 @@ async function loginUser(req, res) {
     }
 }
 
+
+async function getuser(req , res){
+    console.log(req.cookies);
+    console.log("get user called");
+    res.send("get user");
+}
+
 module.exports = {
     signupUser,
     loginUser,
     googleSignIn,
+    getuser,
 }
 
