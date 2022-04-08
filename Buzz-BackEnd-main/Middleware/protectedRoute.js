@@ -1,5 +1,3 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
 const userModel = require('../userModel/userModel')
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "kmwnwiniei322in7377342dcd3";

@@ -23,32 +23,15 @@ export default function Login() {
   const [showLogoutButton, setshowLogoutButton] = React.useState(false);
 
   const onLoginSuccess = async (res) => {
-    navigate('/feeds');
     console.log('Login Successful', res.profileObj);
     try {    
       const result = await axios.post("/auth/google",{
       token: res.tokenId});
-  // const data = await result.json();
-  console.log('data--------', result);
-  // store returned user somehow
+      console.log('data--------', result);
+      navigate('/feeds');
     } catch (error) {
       console.log('error==========', error)
-      
     }
-
-    // try {
-    //   const { name, email, googleId } = res.profileObj;
-    //   let result = await axios.post('/signup' , { name ,email, googleId });
-    //   if(result.status===200){
-    //     window.alert("Signup success");
-    //     navigate('/login')
-    //   }else{
-    //     window.alert("fill all details")
-    //   }
-    // } catch (error) {
-    //   console.log('error==========', error)
-    // }
-
     setshowLoginButton(false);
     setshowLogoutButton(true);
   }

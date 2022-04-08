@@ -48,8 +48,7 @@ async function googleSignIn(req, res) {
         console.log(user);
         const uid = user["_id"];
         const jwtToken = jwt.sign({payload:uid},JWT_KEY);
-        res.cookie("login",jwtToken)
-        return res.status(201).json({ name, email, googleId: sub });
+        return res.cookie('login', jwtToken).status(201).json({ name, email, googleId: sub });
     } catch (error) {
         console.log('Error occurred', error);
         res.send(error.message)
@@ -100,11 +99,10 @@ async function getuser(req , res){
 }
 
 function logout(req , res){
-    res.cookie('login','',{maxAge:1})
-    
-    res.json({
-        message:'logged out success '
-    })
+    return res
+        .clearCookie("login")
+        .status(200)
+        .json({ message: "logged out success" });
 }
 
 
