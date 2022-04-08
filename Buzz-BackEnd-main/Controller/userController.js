@@ -1,18 +1,27 @@
 const userModel = require('../userModel/userModel');
+const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "kmwnwiniei322in7377342dcd3";
 
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 async function signupUser(req, res) {
 
     try {
-        const user = {
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword
+        const { name, email, password, confirmPassword } = req.body;
+        let user = {
+            name,
+            email,
+            password,
+            confirmPassword,
         }
-        const userObj = await userModel.create(user);
+        const existingUser = await userModel.findOne({ email });
+        let userObj;
+        if (existingUser?.googleId && !(existingUser.password && existingUser.confirmPassword)) {
+            userObj = await userModel.updateOne({ email }, { name, password, confirmPassword })
+        } else {
+            userObj = await userModel.create(user);
+        }
         console.log(userObj);
         res.json({
             message: userObj
@@ -25,6 +34,23 @@ async function signupUser(req, res) {
         console.log(err);
     }
 
+}
+
+async function googleSignIn(req, res) {
+    try {
+        const { token } = req.body
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.CLIENT_ID
+        });
+        const { name, email, sub } = ticket.getPayload();
+        await userModel.findOneAndUpdate({ email }, { name, googleId: sub });
+        return res.status(201).json({ name, email, googleId: sub });
+    } catch (error) {
+        console.log('Error occurred', error);
+        res.send(error.message)
+        res.status(500);
+    }
 }
 
 async function loginUser(req, res) {
@@ -81,6 +107,7 @@ function logout(req , res){
 module.exports = {
     signupUser,
     loginUser,
+    googleSignIn,
     getuser,
     logout
 }
