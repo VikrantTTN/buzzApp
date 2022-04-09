@@ -13,6 +13,10 @@ userRouter
 .route('/login')
 .post(loginUser)
 
+userRouter
+.route('/logout')
+.get(logout)
+
 userRouter.get('/feeds', protectedRoute, getuser);
 
 
