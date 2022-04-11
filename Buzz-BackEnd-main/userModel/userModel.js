@@ -39,6 +39,22 @@ const userSchema = mongoose.Schema({
         validate: function () {
             return this.confirmPassword === this.password;
         }
+    },
+    friends:{
+        type:Array,
+        default:[]
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false,
+    },
+    desc:{
+        type:String,
+        max:50
+    },
+    city:{
+        type:String,
+        max:10
     }
 })
 

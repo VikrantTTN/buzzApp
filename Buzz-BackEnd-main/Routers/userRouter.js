@@ -2,8 +2,15 @@ const express = require('express');
 const userRouter = express.Router();
 const { signupUser, loginUser, googleSignIn, getuser, logout } = require('../Controller/userController');
 const protectedRoute = require('../Middleware/protectedRoute')
-
+const {updateUser , deleteUser , getaUser , addFriend , unFriend} = require('../Controller/CrudUser')
 userRouter.post("/auth/google", googleSignIn);
+
+userRouter
+.route('/')
+.get((req,res)=>{
+    console.log("get");
+    res.send("working");
+})
 
 userRouter
 .route('/signup')
@@ -19,6 +26,18 @@ userRouter
 
 userRouter.get('/feeds', protectedRoute, getuser);
 
+userRouter
+.route('/feeds/:id')
+.patch(updateUser)
+.delete(deleteUser)
+.get(getaUser)
 
+userRouter
+.route('/feeds/:id/addfriend')
+.patch(addFriend)
+
+userRouter
+.route('/feeds/:id/unfriend')
+.patch(unFriend)
 
 module.exports = userRouter; 
