@@ -6,13 +6,6 @@ const {updateUser , deleteUser , getaUser , addFriend , unFriend} = require('../
 userRouter.post("/auth/google", googleSignIn);
 
 userRouter
-.route('/')
-.get((req,res)=>{
-    console.log("get");
-    res.send("working");
-})
-
-userRouter
 .route('/signup')
 .post(signupUser)
 
