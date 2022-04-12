@@ -15,7 +15,7 @@ const postSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    desc:{
+    caption:{
         type:String,
         max:500
     },

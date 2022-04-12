@@ -4,12 +4,12 @@ const userModel = require('../userModel/userModel');
 // create post
 async function createPost(req, res) {
   try {
-    const {userId , desc} =  req.body
+    const {userId , caption} =  req.body
     const post = {
       userId,
-      desc
+      caption
     }
-    const createdPost = await postModel.create(post);
+    const createPost = await postModel.create(post);
     res.json({
       message: 'post created',
       data: createPost
@@ -41,11 +41,12 @@ async function updatePost(req, res) {
   console.log("update post called");
   try {
     const postId = req.params.id
-    const { userId } = req.body;
+    const { userId , caption } = req.body;
+    const dataToUpdate = JSON.parse(JSON.stringify({ caption }));
     const post = await postModel.findById(postId);
     if (post) {
       if (post.userId === userId) {
-        await post.updateOne({ $set: req.body });
+        await post.updateOne({ $set: dataToUpdate });
         res.status(200).json("post has been updated")
       } else {
         res.status(400).json('Bad request')
