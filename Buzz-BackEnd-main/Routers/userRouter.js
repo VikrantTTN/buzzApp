@@ -2,7 +2,8 @@ const express = require('express');
 const userRouter = express.Router();
 const { signupUser, loginUser, googleSignIn, getuser, logout } = require('../Controller/userController');
 const protectedRoute = require('../Middleware/protectedRoute')
-const {updateUser , deleteUser , getaUser , addFriend , unFriend} = require('../Controller/CrudUser')
+const {updateUser , deleteUser , getUserById , addFriend , unFriend} = require('../Controller/CrudUser');
+const { post } = require('./postRouter');
 userRouter.post("/auth/google", googleSignIn);
 
 userRouter
@@ -23,7 +24,7 @@ userRouter
 .route('/feeds/:id')
 .patch(updateUser)
 .delete(deleteUser)
-.get(getaUser)
+.get(getUserById)
 
 userRouter
 .route('/feeds/:id/addfriend')

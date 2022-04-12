@@ -3,20 +3,27 @@ const userModel = require('../userModel/userModel');
 // update a user 
 
 async function updateUser(req, res) {
-    console.log("update user");
+    console.log("update user called");
     try {
-        if (req.body.userId === req.params.id || req.body.isAdmin) {
-            let id = req.params.id
+        let id = req.params.id;
+        const { userId, isAdmin } = req.body
+        const { name, password, email, desc } = req.body;
+        const dataToUpdate = JSON.parse(JSON.stringify({ name, password, email, desc }));
+        if (userId === id || isAdmin) {
             let user = await userModel.findByIdAndUpdate(id, {
-                $set: req.body,
+                $set: dataToUpdate,
             });
-            console.log(user);
+            // if not user -> err 
+           if(user){
             res.status(200).json({
                 message: 'account updated',
                 data: user
             })
+           }else{
+               res.status(404).json("user not found")
+           }
         } else {
-            return res.status(403).json("You can only update your account")
+            return res.status(400).json("Bad Request")
         }
     } catch (err) {
         res.status(500).json(err.message)
@@ -31,10 +38,17 @@ async function deleteUser(req, res) {
         if (req.body.userId === req.params.id || req.body.isAdmin) {
             let id = req.params.id
             let user = await userModel.findByIdAndDelete(id)
+            // if not user -> err
+           if(user){
             res.status(200).json({
                 message: 'user Delete',
                 data: user
             })
+           }else{
+            res.status(404).json({
+                message: 'user not found',
+            })
+           }
         } else {
             return res.status(403).json("You can only Delete your account")
         }
@@ -45,15 +59,21 @@ async function deleteUser(req, res) {
 
 // get user
 
-async function getaUser(req, res) {
+async function getUserById(req, res) {
+    console.log("getUserById called");
     try {
         let id = req.params.id;
-        let user = await userModel.findById(id);
-        let {password , ...other} = user._doc;
+        let user = await userModel.findById(id).lean();
+        // if not user show err 
+       if(user){
+        let { password, ...other } = user;
         res.status(200).json({
-            message:'user found',
-            data : other
+            message: 'user found',
+            data: other
         })
+       }else{
+           res.status(404).json("user not found")
+       }
 
     } catch (err) {
         res.status(500).json(err.message)
@@ -62,60 +82,60 @@ async function getaUser(req, res) {
 
 // Adding friends 
 
-async function addFriend(req , res){
-   try{
-    console.log("addfriend called");
-    const toAddFriendId = req.params.id ;
-    const userId = req.body.userId
-    const toAddFriend = await userModel.findById(toAddFriendId)
-    const user = await userModel.findById(userId) 
-    if( toAddFriendId === userId){
-        res.status(403).json('UnAuthorized request');
-    }else{
-        if(!user.friends.includes(toAddFriendId)){
-            await user.updateOne({$push: {friends:toAddFriendId}});
-            await toAddFriend.updateOne({$push: {friends:userId}});
-            res.status(200).json("You are now friends")
-        }else{
-            res.status(403).json('You are already friends')
+async function addFriend(req, res) {
+    try {
+        console.log("addfriend called");
+        const toAddFriendId = req.params.id;
+        const userId = req.body.userId
+        const toAddFriend = await userModel.findById(toAddFriendId)
+        const user = await userModel.findById(userId)
+        if (toAddFriendId === userId) {
+            res.status(400).json('Bad request');
+        } else {
+            if (!user.friends.includes(toAddFriendId)) {
+                await user.updateOne({ $push: { friends: toAddFriendId } });
+                await toAddFriend.updateOne({ $push: { friends: userId } });
+                res.status(200).json("You are now friends")
+            } else {
+                res.status(400).json('You are already friends')
+            }
         }
+    } catch (err) {
+        res.status(500).json(err.message)
     }
-   }catch(err){
-       res.status(500).json(err.message)
-   }
 }
 
 // unFriend a friend
 
-async function unFriend(req , res){
-    try{
-     console.log("unfriend called");
-     const tounFriendId = req.params.id ;
-     const userId = req.body.userId
-     const tounFriend = await userModel.findById(tounFriendId)
-     const user = await userModel.findById(userId) 
-     if( tounFriendId === userId){
-         res.status(403).json('UnAuthorized request');
-     }else{
-         if(user.friends.includes(tounFriendId)){
-             await user.updateOne({$pull: {friends:tounFriendId}});
-             await tounFriend.updateOne({$pull: {friends:userId}});
-             res.status(200).json("You unFriend your friend")
-         }else{
-             res.status(403).json('You both are not friends')
-         }
-     }
-    }catch(err){
+async function unFriend(req, res) {
+    try {
+        console.log("unfriend called");
+        const tounFriendId = req.params.id;
+        const userId = req.body.userId
+        const tounFriend = await userModel.findById(tounFriendId)
+        const user = await userModel.findById(userId)
+        if (tounFriendId === userId) {
+            res.status(403).json('UnAuthorized request');
+        } else {
+            if (user.friends.includes(tounFriendId)) {
+                await user.updateOne({ $pull: { friends: tounFriendId } });
+                await tounFriend.updateOne({ $pull: { friends: userId } });
+                res.status(200).json("You unFriend your friend")
+            } else {
+                res.status(403).json('You both are not friends')
+            }
+        }
+    } catch (err) {
         res.status(500).json(err.message)
     }
- }
- 
+}
+
 
 
 module.exports = {
     updateUser,
     deleteUser,
-    getaUser,
+    getUserById,
     addFriend,
     unFriend
 }
