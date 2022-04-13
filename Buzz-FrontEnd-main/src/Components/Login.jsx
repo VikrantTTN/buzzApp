@@ -24,9 +24,10 @@ export default function Login() {
 
   const onLoginSuccess = async (res) => {
     console.log('Login Successful', res.profileObj);
-    try {    
-      const result = await axios.post("/auth/google",{
-      token: res.tokenId});
+    try {
+      const result = await axios.post("/auth/google", {
+        token: res.tokenId
+      });
       console.log('data--------', result);
       navigate('/');
     } catch (error) {
@@ -49,7 +50,7 @@ export default function Login() {
   const handleClick = async () => {
     console.log(email, password);
     if (email && password) {
-      
+
       const res = await axios.post('/login', { email: email, password: password });
       if (res.data.message === "Logged in" && res.status === 200) {
         navigate('/');
@@ -77,7 +78,8 @@ export default function Login() {
           </CardContent>
 
           <CardActions>
-            
+
+            <Button size="large" sx={{ margin: 'auto' }} margin='normal'>
             {showLoginButton ? <GoogleLogin
               clientId={clientId}
               buttonText="Log in with Google"
@@ -92,6 +94,7 @@ export default function Login() {
               onLogoutSuccess={onSignoutSuccess}
             >
             </GoogleLogout> : null}
+            </Button>
 
           </CardActions>
         </Card>
