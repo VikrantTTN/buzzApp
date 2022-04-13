@@ -1,7 +1,7 @@
 .topCont {
     height: 50px;
     width: 100%;
-    background-color:violet;
+    background-color: purple;
     display: flex;
     align-items: center;
     position: sticky;
