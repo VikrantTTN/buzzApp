@@ -28,7 +28,7 @@ export default function Login() {
       const result = await axios.post("/auth/google",{
       token: res.tokenId});
       console.log('data--------', result);
-      navigate('/feeds');
+      navigate('/');
     } catch (error) {
       console.log('error==========', error)
     }
@@ -52,7 +52,7 @@ export default function Login() {
       
       const res = await axios.post('/login', { email: email, password: password });
       if (res.data.message === "Logged in" && res.status === 200) {
-        navigate('/feeds');
+        navigate('/');
       } else {
         alert("Wrong Credintials")
       }

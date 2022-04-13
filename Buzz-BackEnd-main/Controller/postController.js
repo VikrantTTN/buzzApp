@@ -111,16 +111,17 @@ async function likePost(req, res) {
 async function feedsPost(req , res){
   console.log("feedsPost");
  try{
-  let {userId} = req.body;
-  let user = await userModel.findById(userId);
+  const {userId} = req.body;
+  const user = await userModel.findById(userId);
   if(user){
-    const userPosts = await postModel.find({userId:user._id});
-    const friends = await user.friends;
+    const allIds= [...user.friends, user._id];
+    const allPost = await postModel.find({ userId: {$in: allIds } });
+    //const userPosts = await postModel.find({userId:user._id});
     //console.log(friends);
-    let friendsPost = await Promise.all(friends.map((id)=>{
-      return postModel.find({userId:id});
-    }))
-    const allPost = userPosts.concat(...friendsPost);
+    // let friendsPost = await Promise.all(friends.map((id)=>{
+    //   return postModel.find({userId:id});
+    // }))
+    //const allPost = userPosts.concat(...friendsPost);
     res.json(allPost);
   }else{
     res.json('no user found')

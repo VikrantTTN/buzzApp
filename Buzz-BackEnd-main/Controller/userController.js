@@ -88,6 +88,7 @@ async function loginUser(req, res) {
 
 
 async function getuser(req , res){
+    console.log("get user called");
     let id = req.id;
     console.log(id);
     let user = await userModel.findOne({id});
