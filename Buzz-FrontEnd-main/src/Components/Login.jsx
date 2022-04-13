@@ -15,7 +15,8 @@ import { GoogleLogout, GoogleLogin } from 'react-google-login'
 
 export default function Login() {
 
-  const clientId = '946639695090-3haoin5ecegqqu7og3blv1jnt7kt6dgc.apps.googleusercontent.com';
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+  console.log(process.env);
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
