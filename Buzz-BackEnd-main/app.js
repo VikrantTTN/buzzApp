@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-
+app.use('/images' , express.static(path.join(__dirname,"public/images")));
 
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
