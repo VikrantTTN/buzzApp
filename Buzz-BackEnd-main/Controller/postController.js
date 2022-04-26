@@ -140,7 +140,6 @@ async function userPost(req , res){
   console.log("userPost called");
  try{
   const userId = req.id;
-  console.log(userId);
   const userPost = await postModel.find({userId : userId});
   console.log(userPost);
   if(userPost){

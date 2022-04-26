@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import "./Topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
-import profilePicture from '../../Assests/profilePicture.jpeg';
+import profilePicture from '../../Assests/avatar.jpeg';
 import { Button } from '@mui/material';
 import {Link} from 'react-router-dom';
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './post.css';
 import profilePicture from '../../Assests/profilePicture.jpeg';
 import heart from '../../Assests/heart.png';
+import heartT from '../../Assests/heartT.png';
 import { MoreVert } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import axios from "axios";
@@ -25,7 +26,7 @@ export default function Post({ post, user }) {
         const postuser = async () => {
             let res = await axios.get("/feeds/" + post.userId);
             //console.log(res.data.data);
-            setPostUser(res.data.data.name)
+            setPostUser(res.data.data)
         }
         postuser();
     }, [post.userId])
@@ -35,8 +36,8 @@ export default function Post({ post, user }) {
                 <div className='postTop'>
                     <div className="postTopLeft">
                         <Link to={`/user`} style={{ textDecoration: "none" }}>
-                            <img className='postProfileImg' src={path + user.profileImg || profilePicture} />
-                            <span className='postUsername' >{postUser}</span>
+                            <img className='postProfileImg' src={postUser.profileImg ? path + postUser.profileImg : profilePicture} />
+                            <span className='postUsername' >{postUser.name}</span>
                         </Link>
                         <span className='postDate'>2 min ago</span>
                     </div>
@@ -51,7 +52,7 @@ export default function Post({ post, user }) {
                 </div>
                 <div className='postBottom'>
                     <div className="postBottomLeft">
-                        <img className='likeIcon' src={heart} onClick={handleClick} alt="" />
+                        <img className='likeIcon' src={isLiked ? heart : heartT} onClick={handleClick} alt="" />
                         <span className='postLikeCounter'>{like} Likes</span>
                     </div>
                     <div className="postBottomRight">

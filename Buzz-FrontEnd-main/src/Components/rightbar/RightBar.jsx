@@ -9,23 +9,24 @@ export default function Rightbar() {
 
   const {friends} = useContext(Context);
   console.log(friends);
+  const path = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
         <div className="birthdayContainer">
           <img className="birthdayImg" src={birthday} alt=""/>
           <span className="birthdayText">
-            <b>Adam</b> and <b>3 other friends</b> have a birthday today
+            <b>Adam</b> and <b>2 other friends</b> have a birthday today
           </span>
         </div>
         <img className="rightbarAd" src={party}/>
-        <h4 className="rightbarTitle">online Friends</h4>
+        <h4 className="rightbarTitle">Your Friends</h4>
         <ul className="rightbarFriendList">
           {
             friends.map((friend)=>(
               <li className="rightbarFriend">
               <div className="rightbarProfileImgContainer">
-                <img className="rightbarProfileImg" src={avatar}/>
+                <img className="rightbarProfileImg" src={friend.profileImg ? path + friend.profileImg : avatar}/>
                 <span className="rightbarOnline"></span>
               </div>
               <span className="rightbarUsername">{friend.name}</span>

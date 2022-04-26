@@ -1,6 +1,6 @@
 import './share.css';
 import { PermMedia, Label, Room, EmojiEmotionsRounded } from "@material-ui/icons";
-import profilePicture from '../../Assests/profilePicture.jpeg';
+import profilePicture from '../../Assests/avatar.jpeg';
 import { useRef, useState , useContext} from 'react';
 import { Context } from '../../Context/Context';
 import axios from 'axios';

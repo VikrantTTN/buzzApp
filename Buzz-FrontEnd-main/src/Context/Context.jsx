@@ -18,7 +18,7 @@ export default function ContextProvider({ children }) {
             }
         }
         getUser();
-    }, [])
+    }, [user._id])
 
     useEffect(() => {
         const getFriends = async () => {

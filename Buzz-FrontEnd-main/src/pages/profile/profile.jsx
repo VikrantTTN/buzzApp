@@ -4,14 +4,12 @@ import Topbar from "../../Components/Topbar/Topbar";
 import LeftBar from "../../Components/LeftBar/Leftbar";
 import Feed from "../../Components/feed/Feed";
 import Rightbar from "../../Components/rightbar/RightBar";
-import profileImg from '../../Assests/profilePicture.jpeg';
+import profileImg from '../../Assests/avatar.jpeg';
 import axios from 'axios';
 import { Context } from "../../Context/Context";
 export default function Profile() {
-  // const [user, setUser] = useState({});
-
-  const { user } = useContext(Context)
-  console.log(user);
+  const { user } = useContext(Context);
+  const path = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <>
       <Topbar />
@@ -23,7 +21,7 @@ export default function Profile() {
 
               <img
                 className="profileUserImg"
-                src={profileImg}
+                src={user.profileImg ? path + user.profileImg : profileImg}
                 alt=""
               />
             </div>
