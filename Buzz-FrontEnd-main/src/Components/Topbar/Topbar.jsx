@@ -9,7 +9,6 @@ import {Link} from 'react-router-dom';
 
 export default function Topbar() {
   const [user, setUser] = React.useState('');
-  console.log(user.profileImg);
   const navigate = useNavigate()
   const path = process.env.REACT_APP_PUBLIC_FOLDER;
 

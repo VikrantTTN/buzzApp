@@ -137,7 +137,8 @@ async function fetchFriends(req, res) {
         console.log("fetch Friends called");
         const user = req.user;
         const friendsId = user.friends;
-        const friends = await userModel.findById({ $in: friendsId });
+        const friends = await userModel.find({_id : { $in: friendsId }});
+        //console.log(friends);
         res.json(friends)
     } catch (err) {
         res.status(500).json(err.message)

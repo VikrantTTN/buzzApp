@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
 import axios from "axios";
 
@@ -7,24 +7,40 @@ export const Context = createContext();
 export default function ContextProvider({ children }) {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
-
+    const [friends, setfriends] = useState([]);
     useEffect(() => {
         const getUser = async () => {
-            let res = await axios.get('/feeds');
-            console.log(res);
-            setUser(res.data.message)
+            try {
+                let res = await axios.get('/feeds');
+                setUser(res.data.message)
+            } catch (err) {
+                console.log(err.message);
+            }
         }
         getUser();
+    }, [])
+
+    useEffect(() => {
+        const getFriends = async () => {
+            try {
+                let res = await axios.get('/user/friends');
+                setfriends(res.data)
+            } catch (err) {
+                console.log(err.message);
+            }
+        }
+        getFriends();
     }, [])
 
     const store = {
         user,
         loading,
-        setLoading
+        setLoading,
+        friends
     }
     return (
-   <Context.Provider value={store}>
-       {children}
-   </Context.Provider>
-  )
+        <Context.Provider value={store}>
+            {children}
+        </Context.Provider>
+    )
 }

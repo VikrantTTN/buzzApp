@@ -9,7 +9,6 @@ import { Context } from "../../Context/Context";
 export default function Feed({ profile }) {
     const [posts, setPosts] = useState([]);  
     const { user , loading , setLoading } = useContext(Context);
-    console.log(user);
     useEffect(() => {
         const fetchPosts = async () => {
             let res ;
