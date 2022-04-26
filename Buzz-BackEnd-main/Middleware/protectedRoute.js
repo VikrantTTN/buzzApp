@@ -1,9 +1,8 @@
-const userModel = require('../userModel/userModel')
+const userModel = require('../Model/userModel')
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "kmwnwiniei322in7377342dcd3";
 
 async function protectedRoute(req, res, next) {
-    console.log(req.cookies);
     try{ 
         let token;
         if (req.cookies.login) {
@@ -16,6 +15,7 @@ async function protectedRoute(req, res, next) {
                 //console.log(user);
                 //req.role = user.role;
                 req.id = user._id;
+                req.user =user;
                 next();
             }
             else{

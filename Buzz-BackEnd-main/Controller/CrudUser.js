@@ -1,4 +1,4 @@
-const userModel = require('../userModel/userModel');
+const userModel = require('../Model/userModel');
 
 // update a user 
 
@@ -14,14 +14,14 @@ async function updateUser(req, res) {
                 $set: dataToUpdate,
             });
             // if not user -> err 
-           if(user){
-            res.status(200).json({
-                message: 'account updated',
-                data: user
-            })
-           }else{
-               res.status(404).json("user not found")
-           }
+            if (user) {
+                res.status(200).json({
+                    message: 'account updated',
+                    data: user
+                })
+            } else {
+                res.status(404).json("user not found")
+            }
         } else {
             return res.status(400).json("Bad Request")
         }
@@ -39,16 +39,16 @@ async function deleteUser(req, res) {
             let id = req.params.id
             let user = await userModel.findByIdAndDelete(id)
             // if not user -> err
-           if(user){
-            res.status(200).json({
-                message: 'user Delete',
-                data: user
-            })
-           }else{
-            res.status(404).json({
-                message: 'user not found',
-            })
-           }
+            if (user) {
+                res.status(200).json({
+                    message: 'user Delete',
+                    data: user
+                })
+            } else {
+                res.status(404).json({
+                    message: 'user not found',
+                })
+            }
         } else {
             return res.status(403).json("You can only Delete your account")
         }
@@ -65,15 +65,15 @@ async function getUserById(req, res) {
         let id = req.params.id;
         let user = await userModel.findById(id).lean();
         // if not user show err 
-       if(user){
-        let { password, ...other } = user;
-        res.status(200).json({
-            message: 'user found',
-            data: other
-        })
-       }else{
-           res.status(404).json("user not found")
-       }
+        if (user) {
+            let { password, ...other } = user;
+            res.status(200).json({
+                message: 'user found',
+                data: other
+            })
+        } else {
+            res.status(404).json("user not found")
+        }
 
     } catch (err) {
         res.status(500).json(err.message)
@@ -130,6 +130,19 @@ async function unFriend(req, res) {
     }
 }
 
+// Fetch user friends
+
+async function fetchFriends(req, res) {
+    try {
+        console.log("fetch Friends called");
+        const user = req.user;
+        const friendsId = user.friends;
+        const friends = await userModel.findById({ $in: friendsId });
+        res.json(friends)
+    } catch (err) {
+        res.status(500).json(err.message)
+    }
+}
 
 
 module.exports = {
@@ -137,5 +150,6 @@ module.exports = {
     deleteUser,
     getUserById,
     addFriend,
-    unFriend
+    unFriend,
+    fetchFriends
 }

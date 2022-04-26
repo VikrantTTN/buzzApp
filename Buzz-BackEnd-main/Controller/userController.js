@@ -1,4 +1,4 @@
-const userModel = require('../userModel/userModel');
+const userModel = require('../Model/userModel');
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "kmwnwiniei322in7377342dcd3";
@@ -44,9 +44,9 @@ async function googleSignIn(req, res) {
             audience: process.env.CLIENT_ID
         });
         const { name, email, sub } = ticket.getPayload();
-        const user = await userModel.findOneAndUpdate({ email }, { name, googleId: sub },{upsert:true});
+        const user = await userModel.findOneAndUpdate({ email }, { name, googleId: sub }, { upsert: true });
         const uid = user["_id"];
-        const jwtToken = jwt.sign({payload:uid},JWT_KEY);
+        const jwtToken = jwt.sign({ payload: uid }, JWT_KEY);
         return res.cookie('login', jwtToken).status(201).json({ name, email, googleId: sub });
     } catch (error) {
         res.send(error.message)
@@ -63,8 +63,8 @@ async function loginUser(req, res) {
             if (user) {
                 if (user.password === data.password) {
                     const uid = user["_id"];
-                    const token = jwt.sign({payload:uid},JWT_KEY);
-                    res.cookie("login",token)
+                    const token = jwt.sign({ payload: uid }, JWT_KEY);
+                    res.cookie("login", token)
                     res.json({
                         message: "Logged in"
                     })
@@ -85,20 +85,21 @@ async function loginUser(req, res) {
 }
 
 
-async function getuser(req , res){
-  try{
-    console.log("get user called");
-    let id = req.id;
-    let user = await userModel.findById(id);
-    res.json({
-        message : user
-    });
-  }catch(err){
-      res.status(500).json(err.message)
-  }
+async function getuser(req, res) {
+    try {
+        console.log("get user called");
+        let id = req.id;
+        // let user = await userModel.findById(id);
+        let user = req.user;
+        res.json({
+            message: user
+        });
+    } catch (err) {
+        res.status(500).json(err.message)
+    }
 }
 
-function logout(req , res){
+function logout(req, res) {
     return res
         .clearCookie("login")
         .status(200)
