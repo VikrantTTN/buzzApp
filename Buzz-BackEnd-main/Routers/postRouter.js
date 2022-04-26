@@ -1,14 +1,18 @@
 const express = require('express');
 const postRouter = express.Router();
-const {createPost , updatePost , deletePost , likePost ,getPost , feedsPost} = require('../Controller/postController')
+const {createPost , updatePost , deletePost , likePost ,getPost , feedsPost,userPost} = require('../Controller/postController');
+const protectedRoute = require('../Middleware/protectedRoute');
+
+
+
+postRouter.use(protectedRoute)
+
 postRouter
 .route('/')
 .post(createPost)
 
-postRouter
-.route('/feeds')
-.post(feedsPost)
-
+postRouter.get('/feedPosts',feedsPost);
+postRouter.get('/userPosts' , userPost)
 
 postRouter
 .route('/:id')

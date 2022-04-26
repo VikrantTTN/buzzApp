@@ -5,17 +5,19 @@ import "./Topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import profilePicture from '../../Assests/profilePicture.jpeg';
 import { Button } from '@mui/material';
+import {Link} from 'react-router-dom';
 
 export default function Topbar() {
-  const [user, setUser] = React.useState('')
+  const [user, setUser] = React.useState('');
+  console.log(user.profileImg);
   const navigate = useNavigate()
+  const path = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
     (async function log() {
       try {
-        console.log('useeffect');
         let res = await axios.get('/feeds');
-        setUser(res.data)
+        setUser(res.data.message)
       } catch (err) {
         setUser('UnAuthorized')
         console.log(err.message);
@@ -63,7 +65,7 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <img src={profilePicture} alt="" className="Img"/>
+        <Link to ="/user"><img src={user.profileImg ? path + user.profileImg : profilePicture} alt="" className="Img"/></Link>
         <Button variant="contained" color='secondary' size="small" onClick={handleClick}  >
           Sign out
         </Button>

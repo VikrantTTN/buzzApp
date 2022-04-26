@@ -55,6 +55,9 @@ const userSchema = mongoose.Schema({
     city:{
         type:String,
         max:10
+    },
+    profileImg:{
+        type:String,
     }
 })
 

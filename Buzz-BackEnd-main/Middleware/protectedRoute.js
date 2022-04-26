@@ -9,10 +9,11 @@ async function protectedRoute(req, res, next) {
         if (req.cookies.login) {
             token = req.cookies.login;
             let payload = jwt.verify(token, JWT_KEY);
-            console.log(payload);
+           // console.log(payload);
             if (payload) {
                 const user = await userModel.findById(payload.payload);
                 console.log("protected route called");
+                //console.log(user);
                 //req.role = user.role;
                 req.id = user._id;
                 next();

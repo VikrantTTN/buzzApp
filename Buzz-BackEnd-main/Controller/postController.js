@@ -4,10 +4,12 @@ const userModel = require('../userModel/userModel');
 // create post
 async function createPost(req, res) {
   try {
-    const {userId , caption} =  req.body
+    const userId = req.id;
+    const {caption , image} =  req.body
     const post = {
       userId,
-      caption
+      caption,
+      image
     }
     const createPost = await postModel.create(post);
     res.json({
@@ -82,20 +84,20 @@ async function deletePost(req, res) {
   }
 }
 
-// like post 
+// like/unlike post 
 
 async function likePost(req, res) {
   console.log("like post called");
   try {
     const postId = req.params.id;
-    const { userId } = req.body
+    const id = req.id;
     const post = await postModel.findById(postId);
     if (post) {
-      if (post.likes.includes(userId)) {
-        await post.updateOne({ $pull: { likes: userId } });
+      if (post.likes.includes(id)) {
+        await post.updateOne({ $pull: { likes: id} });
         res.json('post like removed')
       } else {
-        await post.updateOne({ $push: { likes: userId } });
+        await post.updateOne({ $push: { likes: id } });
         res.json('post liked');
       }
     } else {
@@ -109,9 +111,10 @@ async function likePost(req, res) {
 // feeds post
 
 async function feedsPost(req , res){
-  console.log("feedsPost");
+  console.log("feedsPost called");
  try{
-  const {userId} = req.body;
+  const userId = req.id;
+  console.log(userId);
   const user = await userModel.findById(userId);
   if(user){
     const allIds= [...user.friends, user._id];
@@ -131,11 +134,32 @@ async function feedsPost(req , res){
  }
 }
 
+// user post 
+
+async function userPost(req , res){
+  console.log("userPost called");
+ try{
+  const userId = req.id;
+  console.log(userId);
+  const userPost = await postModel.find({userId : userId});
+  console.log(userPost);
+  if(userPost){
+    res.json(userPost);
+  }else{
+    res.json("No Posts")
+  }
+ }catch(err){
+   res.status(500).json(err.message)
+ }
+}
+
+
 module.exports = {
   createPost,
   updatePost,
   deletePost,
   likePost,
   getPost,
-  feedsPost
+  feedsPost,
+  userPost
 }

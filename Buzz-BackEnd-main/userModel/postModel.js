@@ -19,14 +19,14 @@ const postSchema = mongoose.Schema({
         type:String,
         max:500
     },
-    img:{
+    image:{
         type:String,
     },
     likes:{
         type:Array,
         default:[]
-    }
-})
+    },
+},{ timestamps: true })
 
 const postModel = mongoose.model('postModel', postSchema, "Buzz posts");
 

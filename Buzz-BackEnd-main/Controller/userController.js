@@ -45,12 +45,10 @@ async function googleSignIn(req, res) {
         });
         const { name, email, sub } = ticket.getPayload();
         const user = await userModel.findOneAndUpdate({ email }, { name, googleId: sub },{upsert:true});
-        console.log(user);
         const uid = user["_id"];
         const jwtToken = jwt.sign({payload:uid},JWT_KEY);
         return res.cookie('login', jwtToken).status(201).json({ name, email, googleId: sub });
     } catch (error) {
-        console.log('Error occurred', error);
         res.send(error.message)
         res.status(500);
     }
@@ -88,15 +86,16 @@ async function loginUser(req, res) {
 
 
 async function getuser(req , res){
+  try{
     console.log("get user called");
     let id = req.id;
-    console.log(id);
-    let user = await userModel.findOne({id});
-    console.log(user);
-    console.log("get user called");
+    let user = await userModel.findById(id);
     res.json({
         message : user
     });
+  }catch(err){
+      res.status(500).json(err.message)
+  }
 }
 
 function logout(req , res){

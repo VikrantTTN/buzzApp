@@ -29,7 +29,7 @@ export default function LeftBar() {
         <ul className="sidebarFriendList">
           <li className="sidebarFriend">
             <img src={friend} alt="" className="sidebarFriendImg" />
-            <span className="sidebarFriendName">shiv</span>
+            <span className="sidebarFriendName">David</span>
           </li>
           
         </ul>
