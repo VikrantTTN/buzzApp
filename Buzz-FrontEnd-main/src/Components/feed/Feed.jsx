@@ -6,16 +6,21 @@ import { useEffect, useState , useContext} from "react";
 import Spinner from "../post/Spinner";
 import { Context } from "../../Context/Context";
 
-export default function Feed({ profile }) {
+export default function Feed({ profile , friend_id }) {
     const [posts, setPosts] = useState([]);  
     const { user , loading , setLoading } = useContext(Context);
     useEffect(() => {
         const fetchPosts = async () => {
             let res ;
             if (!profile) {
+                console.log("no profile");
                 res =  await axios.get('/posts/feedposts');
-            }else{
-                console.log("profile");
+            }else if(profile && friend_id){
+                console.log("profile with friend id");
+                res =  await axios.get('/posts/userPosts/'+friend_id);
+            }
+            else{
+                console.log(" only profile");
                 res =  await axios.get('/posts/userPosts');
             }
             setPosts([...res.data.sort((post1 , post2)=>{
@@ -25,10 +30,7 @@ export default function Feed({ profile }) {
         }
         fetchPosts();
     },[loading])
-    //console.log(posts);
 
-
-  
     return (
         <div className="feedWrapper">
             <div className="feedWrapper">

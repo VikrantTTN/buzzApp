@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './post.css';
-import profilePicture from '../../Assests/profilePicture.jpeg';
+import profilePicture from '../../Assests/avatar.jpeg';
 import heart from '../../Assests/heart.png';
 import heartT from '../../Assests/heartT.png';
 import { MoreVert } from '@material-ui/icons';
@@ -26,7 +26,7 @@ export default function Post({ post, user }) {
         const postuser = async () => {
             let res = await axios.get("/feeds/" + post.userId);
             //console.log(res.data.data);
-            setPostUser(res.data.data)
+            setPostUser(res.data.message)
         }
         postuser();
     }, [post.userId])

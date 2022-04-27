@@ -66,10 +66,9 @@ async function getUserById(req, res) {
         let user = await userModel.findById(id).lean();
         // if not user show err 
         if (user) {
-            let { password, ...other } = user;
+            let { password, ...rest } = user;
             res.status(200).json({
-                message: 'user found',
-                data: other
+                message: rest,
             })
         } else {
             res.status(404).json("user not found")

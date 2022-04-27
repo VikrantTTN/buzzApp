@@ -114,7 +114,6 @@ async function feedsPost(req , res){
   console.log("feedsPost called");
  try{
   const userId = req.id;
-  console.log(userId);
   const user = await userModel.findById(userId);
   if(user){
     const allIds= [...user.friends, user._id];
@@ -141,7 +140,23 @@ async function userPost(req , res){
  try{
   const userId = req.id;
   const userPost = await postModel.find({userId : userId});
-  console.log(userPost);
+  if(userPost){
+    res.json(userPost);
+  }else{
+    res.json("No Posts")
+  }
+ }catch(err){
+   res.status(500).json(err.message)
+ }
+}
+
+//user Post by id 
+
+async function userPostById(req , res){
+  console.log("userPostById called");
+ try{
+  const userId = req.params.id;
+  const userPost = await postModel.find({userId : userId});
   if(userPost){
     res.json(userPost);
   }else{
@@ -153,6 +168,7 @@ async function userPost(req , res){
 }
 
 
+
 module.exports = {
   createPost,
   updatePost,
@@ -160,5 +176,6 @@ module.exports = {
   likePost,
   getPost,
   feedsPost,
-  userPost
+  userPost,
+  userPostById
 }

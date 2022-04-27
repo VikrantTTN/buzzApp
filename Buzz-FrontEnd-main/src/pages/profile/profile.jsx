@@ -7,8 +7,24 @@ import Rightbar from "../../Components/rightbar/RightBar";
 import profileImg from '../../Assests/avatar.jpeg';
 import axios from 'axios';
 import { Context } from "../../Context/Context";
+import { useParams } from "react-router";
 export default function Profile() {
-  const { user } = useContext(Context);
+  const [user, setUser] = useState({});
+  const params = useParams();
+  const friend_id = params.id;
+  useEffect(() => {
+    let fetchUser = async () => {
+      let res;
+      if (friend_id) {
+        res = await axios.get(`/feeds/${friend_id}`);
+      } else {
+        res = await axios.get('/feeds');
+      }
+      setUser({...res.data.message})
+    }
+    fetchUser();
+  }, [user])
+  
   const path = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <>
@@ -31,8 +47,8 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <div className="Left-content" style={{ width: "20%" , marginTop:"30px" }}>
-            <h3 className="rightbarTitle">Profile Details</h3>
+            <div className="Left-content" style={{ width: "20%", marginTop: "30px" }}>
+              <h3 className="rightbarTitle">Profile Details</h3>
               <div className="rightbarInfo">
                 <div className="rightbarInfoItem">
                   <span className="rightbarInfoKey">E-mail:</span>
@@ -44,14 +60,14 @@ export default function Profile() {
                 </div>
                 <div className="rightbarInfoItem">
                   <span className="rightbarInfoKey">Friends:</span>
-                  <span className="rightbarInfoValue">{user.friends?.length}<span/>
-                    
+                  <span className="rightbarInfoValue">{user.friends?.length}<span />
+
                   </span>
                 </div>
               </div>
             </div>
             <div className="feeds-content">
-              <Feed profile />
+              <Feed profile friend_id={friend_id} />
             </div>
 
           </div>
