@@ -85,7 +85,7 @@ async function addFriend(req, res) {
     try {
         console.log("addfriend called");
         const toAddFriendId = req.params.id;
-        const userId = req.body.userId
+        const userId = req.id;
         const toAddFriend = await userModel.findById(toAddFriendId)
         const user = await userModel.findById(userId)
         if (toAddFriendId === userId) {
@@ -110,7 +110,7 @@ async function unFriend(req, res) {
     try {
         console.log("unfriend called");
         const tounFriendId = req.params.id;
-        const userId = req.body.userId
+        const userId = req.id;
         const tounFriend = await userModel.findById(tounFriendId)
         const user = await userModel.findById(userId)
         if (tounFriendId === userId) {
