@@ -24,15 +24,17 @@ export default function Rightbar() {
         <ul className="rightbarFriendList">
           {
             friends.map((friend) => (
-              <Link to={`/user/${friend._id}`}>
-                <li className="rightbarFriend">
-                  <div className="rightbarProfileImgContainer">
-                    <img className="rightbarProfileImg" src={friend.profileImg ? path + friend.profileImg : avatar} />
-                    <span className="rightbarOnline"></span>
-                  </div>
-                  <span className="rightbarUsername">{friend.name}</span>
-                </li>
-              </Link>
+            
+                <Link to={`/user/${friend._id}`} key={Math.random()}>
+                  <li className="rightbarFriend" >
+                    <div className="rightbarProfileImgContainer">
+                      <img className="rightbarProfileImg" src={friend.profileImg ? path + friend.profileImg : avatar} />
+                      <span className="rightbarOnline"></span>
+                    </div>
+                    <span className="rightbarUsername">{friend.name}</span>
+                  </li>
+                </Link>
+          
             ))
           }
 

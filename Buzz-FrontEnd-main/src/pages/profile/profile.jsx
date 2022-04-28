@@ -92,7 +92,7 @@ export default function Profile() {
                   padding: "5px 10px"
                 }} onClick={handleClick}>
                   {
-                    !friends ? <>Make friend <Add /></> : <>Unfriend --</>
+                    !friends ? <>Make friend <Add /></> : <>Unfriend <Remove/></>
                   }
 
                 </button>

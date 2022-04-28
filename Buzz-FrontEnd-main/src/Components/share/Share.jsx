@@ -8,22 +8,20 @@ export default function Share() {
     const [file , setFile] = useState(null);
     const {user , loading , setLoading } = useContext(Context);
     const path = process.env.REACT_APP_PUBLIC_FOLDER;
-    
-    const caption = useRef()
+    const [caption , setCaption] = useState('');
     const handleSubmit =async (e)=>{
-        e.preventDefault()
+        e.preventDefault();
+        console.log(caption);
         const post = {
-            caption:caption.current.value,
+            caption:caption
         } 
 
         if(file){
             const fileData = new FormData();
             const fileName = Date.now() +" "+ file.name;
-            console.log(fileName);
             fileData.append("name" , fileName);
             fileData.append('file' , file);
             post.image = fileName;
-            console.log(post);
             try{
                 await axios.post('/upload',fileData);
             }catch(err){
@@ -33,6 +31,7 @@ export default function Share() {
 
         try{
             let res = await axios.post('/posts' , post);
+            setCaption('');
             setLoading(true);
         }catch(err){
             console.log(err.message);
@@ -46,7 +45,8 @@ export default function Share() {
                     <input
                         placeholder="What's in your mind Safak"
                         className="shareInput"
-                        ref={caption} />
+                        value={caption}
+                        onChange={(e)=>setCaption(e.target.value)} />
                 </div>
                 <hr className='shareHr' />
                 {
@@ -83,7 +83,7 @@ export default function Share() {
                             <span className='shareOptionText'>Status</span>
                         </div>
                     </div>
-                    <button className='shareButton' type='submit'>Share</button>
+                    <button className='shareButton' type='submit' disabled={caption === '' ? true : false}>Share</button>
                 </form>
             </div>
         </div>

@@ -112,6 +112,6 @@ module.exports = {
     loginUser,
     googleSignIn,
     getuser,
-    logout
+    logout,
 }
 

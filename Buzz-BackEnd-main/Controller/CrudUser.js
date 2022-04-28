@@ -144,6 +144,17 @@ async function fetchFriends(req, res) {
     }
 }
 
+async function getAllUser(req,res){
+    console.log("get all user called");
+    try{
+        const AllUser = await userModel.find();
+        res.json(AllUser);
+
+    }catch(err){
+        res.status(500).json(err.message)
+    }
+}
+
 
 module.exports = {
     updateUser,
@@ -151,5 +162,6 @@ module.exports = {
     getUserById,
     addFriend,
     unFriend,
-    fetchFriends
+    fetchFriends,
+    getAllUser
 }

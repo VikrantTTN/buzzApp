@@ -37,8 +37,8 @@ export default function Post({ post, user }) {
                     <div className="postTopLeft">
                         <Link to={`/user`} style={{ textDecoration: "none" }}>
                             <img className='postProfileImg' src={postUser.profileImg ? path + postUser.profileImg : profilePicture} />
-                            <span className='postUsername' >{postUser.name}</span>
                         </Link>
+                            <span className='postUsername' >{postUser.name}</span>
                         <span className='postDate'>2 min ago</span>
                     </div>
                     <div className="postTopRight">
