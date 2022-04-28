@@ -48,9 +48,11 @@ export default function Profile() {
     setFriends(!friends)
     console.log(friends);
     if (friends) {
-      let res = await axios.patch(`/feeds/${friend_id}/addfriend`)
+      let res = await axios.patch(`/feeds/${friend_id}/addfriend`);
+      setFriends(true);
     } else {
-      let res = await axios.patch(`/feeds/${friend_id}/unfriend`)
+      let res = await axios.patch(`/feeds/${friend_id}/unfriend`);
+      setFriends(false);
     }
   }
   return (
