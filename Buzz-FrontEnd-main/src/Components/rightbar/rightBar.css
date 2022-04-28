@@ -51,6 +51,7 @@ flex: 2;
 .rightbarUsername{
   font-weight: 500;
   margin-left: 10px;
+  text-decoration: none !important
 }
 .rightbarAd {
   width: 100%;

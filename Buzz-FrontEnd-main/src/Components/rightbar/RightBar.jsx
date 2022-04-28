@@ -25,7 +25,7 @@ export default function Rightbar() {
           {
             friends.map((friend) => (
             
-                <Link to={`/user/${friend._id}`} key={Math.random()}>
+                <Link to={`/user/${friend._id}`} key={Math.random()} style={{textDecoration:"none"}}>
                   <li className="rightbarFriend" >
                     <div className="rightbarProfileImgContainer">
                       <img className="rightbarProfileImg" src={friend.profileImg ? path + friend.profileImg : avatar} />
