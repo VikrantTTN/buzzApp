@@ -34,7 +34,7 @@ export default function Profile() {
         const res = await axios.get('/feeds');
         mainUser = res.data.message;
         //console.log(mainUser.friends.includes(friend_id));
-        if (mainUser.friends.includes(friend_id)) {
+        if (mainUser.friends?.includes(friend_id)) {
           setFriends(true)
         } else {
           setFriends(false)
@@ -47,7 +47,7 @@ export default function Profile() {
   const handleClick = async () => {
     setFriends(!friends)
     console.log(friends);
-    if (friends) {
+    if (!friends) {
       let res = await axios.patch(`/feeds/${friend_id}/addfriend`);
       setFriends(true);
     } else {
@@ -55,6 +55,7 @@ export default function Profile() {
       setFriends(false);
     }
   }
+  console.log(friends);
   return (
     <>
       <Topbar />
@@ -91,7 +92,7 @@ export default function Profile() {
                   padding: "5px 10px"
                 }} onClick={handleClick}>
                   {
-                    friends ? <>Make friend <Add /></> : <>Unfriend --</>
+                    !friends ? <>Make friend <Add /></> : <>Unfriend --</>
                   }
 
                 </button>
