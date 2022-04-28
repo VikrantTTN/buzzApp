@@ -1,5 +1,5 @@
 import './share.css';
-import { PermMedia, Label, Room, EmojiEmotionsRounded } from "@material-ui/icons";
+import { PermMedia, Label, Room, EmojiEmotionsRounded, Cancel } from "@material-ui/icons";
 import profilePicture from '../../Assests/avatar.jpeg';
 import { useRef, useState , useContext} from 'react';
 import { Context } from '../../Context/Context';
@@ -49,6 +49,14 @@ export default function Share() {
                         ref={caption} />
                 </div>
                 <hr className='shareHr' />
+                {
+                    file && (
+                        <div className="shareImgContainer">
+                            <img className='shareImg' src={URL.createObjectURL(file)} alt=''/>
+                            <Cancel className='shareCancelImg' onClick={()=>setFile(null)}/>
+                        </div>
+                    )
+                }
                 <form className="shareBottom" onSubmit={(e)=>handleSubmit(e)}>
                     <label htmlFor='file' className='shareOptions'>
                         <div className='shareOption'>

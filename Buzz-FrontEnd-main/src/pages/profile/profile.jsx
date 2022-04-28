@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./profile.css";
 import Topbar from "../../Components/Topbar/Topbar";
 import Feed from "../../Components/feed/Feed";
-import { Add } from '@material-ui/icons'
+import { Add , Remove} from '@material-ui/icons'
 import profileImg from '../../Assests/avatar.jpeg';
 import axios from 'axios';
 import { Context } from "../../Context/Context";
