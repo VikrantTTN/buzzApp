@@ -17,7 +17,7 @@ export default function Post({ post, user }) {
         setLike(isLiked ? like - 1 : like + 1);
         setIsLiked(!isLiked)
     }
-
+    console.log(post);
     useEffect(() => {
         setIsLiked(post.likes.includes(user._id));
     }, [user._id, post.likes])
@@ -26,7 +26,7 @@ export default function Post({ post, user }) {
         const postuser = async () => {
             let res = await axios.get("/feeds/" + post.userId);
             //console.log(res.data.data);
-            setPostUser(res.data.message)
+            setPostUser({ ...res.data.message })
         }
         postuser();
     }, [post.userId])
@@ -38,7 +38,7 @@ export default function Post({ post, user }) {
                         <Link to={`/user`} style={{ textDecoration: "none" }}>
                             <img className='postProfileImg' src={postUser.profileImg ? path + postUser.profileImg : profilePicture} />
                         </Link>
-                            <span className='postUsername' >{postUser.name}</span>
+                        <span className='postUsername' >{postUser.name}</span>
                         <span className='postDate'>2 min ago</span>
                     </div>
                     <div className="postTopRight">
@@ -47,7 +47,7 @@ export default function Post({ post, user }) {
                 </div>
                 <div className='postCenter'>
                     <span className='postText'> {post.caption} </span>
-                    <img className='postImg' src = {post.image ? path + post.image : null}
+                    <img className='postImg' src={post.image ? path + post.image : null}
                     />
                 </div>
                 <div className='postBottom'>
