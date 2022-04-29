@@ -1,14 +1,15 @@
 import './share.css';
 import { PermMedia, Label, Room, EmojiEmotionsRounded, Cancel } from "@material-ui/icons";
 import profilePicture from '../../Assests/avatar.jpeg';
-import { useRef, useState , useContext} from 'react';
+import { useRef, useState , useContext, useEffect} from 'react';
 import { Context } from '../../Context/Context';
 import axios from 'axios';
 export default function Share() {
     const [file , setFile] = useState(null);
-    const {user , loading , setLoading } = useContext(Context);
+    const {user, setLoading } = useContext(Context);
     const path = process.env.REACT_APP_PUBLIC_FOLDER;
     const [caption , setCaption] = useState('');
+
     const handleSubmit =async (e)=>{
         e.preventDefault();
         console.log(caption);
@@ -37,11 +38,12 @@ export default function Share() {
             console.log(err.message);
         }
     }
+   
     return (
         <div className="share">
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src={user?.profileImg ? path + user.profileImg : profilePicture} alt="" />
+                    <img className="shareProfileImg" src={user.profileImg ? path + user.profileImg : profilePicture} alt="" />
                     <input
                         placeholder="What's in your mind Safak"
                         className="shareInput"

@@ -30,16 +30,16 @@ export default function Feed({ profile, friend_id }) {
         }
         fetchPosts();
     }, [loading])
-    console.log(posts.length);
+
     return (
         <div className="feedWrapper">
             <div className="feedWrapper">
                 {
                     profile ? <div className="div">
                         {loading ? <Spinner /> :
-                            posts?.length !==0 ? posts.map((p) => (
+                            posts?.length !== 0 ? posts.map((p) => (
                                 <Post key={p._id} post={p} user={user} />
-                            )) : <div style={{display:'flex' , flexDirection:'column' , justifyContent :'center' , alignItems:'center'  , padding:'10rem'}}><h1>No posts</h1> <Spinner /></div>}
+                            )) : <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '8rem', paddingLeft:'20rem' , width:"30%" }}><h1>No posts</h1> <Spinner style={{width:'3rem'}}/></div>}
                     </div> :
                         <div className="div">
                             <Share />
@@ -49,7 +49,7 @@ export default function Feed({ profile, friend_id }) {
                                 ))}
                         </div>
                 }
-            </div>
+                     </div>
         </div>
     )
 }

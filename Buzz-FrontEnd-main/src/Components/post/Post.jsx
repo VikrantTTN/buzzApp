@@ -1,23 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './post.css';
 import profilePicture from '../../Assests/avatar.jpeg';
 import heart from '../../Assests/heart.png';
 import heartT from '../../Assests/heartT.png';
-import { MoreVert } from '@material-ui/icons';
+import { MoreVert , DeleteForeverOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import { Context } from "../../Context/Context";
 export default function Post({ post, user }) {
     const [like, setLike] = useState(post.likes.length);
     const [isLiked, setIsLiked] = useState(false);
     const [postUser, setPostUser] = useState("");
+    const { loading, setLoading } = useContext(Context);
     const path = process.env.REACT_APP_PUBLIC_FOLDER;
+
+    const deletePost = async () => {
+        try {
+            const res = await axios.delete(`/posts/${post._id}`);
+            if (res.data == 'Bad request' || res.status == 400) {
+                window.alert(' You cannot delete other user post')
+            } else {
+                window.alert('Post Deleted');
+                setLoading(true);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+
+    }
+
     const handleClick = async () => {
         let res = await axios.patch('/posts/' + post._id + '/like');
         console.log(res);
         setLike(isLiked ? like - 1 : like + 1);
         setIsLiked(!isLiked)
     }
-    console.log(post);
+
     useEffect(() => {
         setIsLiked(post.likes.includes(user._id));
     }, [user._id, post.likes])
@@ -42,7 +60,7 @@ export default function Post({ post, user }) {
                         <span className='postDate'>2 min ago</span>
                     </div>
                     <div className="postTopRight">
-                        <MoreVert />
+                         <DeleteForeverOutlined onClick={deletePost}/>
                     </div>
                 </div>
                 <div className='postCenter'>

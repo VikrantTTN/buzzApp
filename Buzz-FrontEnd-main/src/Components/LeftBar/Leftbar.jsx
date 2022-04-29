@@ -44,7 +44,7 @@ export default function LeftBar() {
         <ul className="sidebarFriendList">
           {
             suggested.map((suggest) => (
-              <Link to={`user/${suggest._id}`} style={{ textDecoration: "none" }}>
+              <Link to={`user/${suggest._id}`} style={{ textDecoration: "none" }} key={suggest._id}>
                 {
                   user._id != suggest._id &&
                   <li className="sidebarFriend" >
