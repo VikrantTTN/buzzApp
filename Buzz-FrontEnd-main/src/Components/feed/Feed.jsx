@@ -39,7 +39,7 @@ export default function Feed({ profile, friend_id }) {
                         {loading ? <Spinner /> :
                             posts?.length !== 0 ? posts.map((p) => (
                                 <Post key={p._id} post={p} user={user} />
-                            )) : <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '8rem', paddingLeft:'20rem' , width:"30%" }}><h1>No posts</h1> <Spinner style={{width:'3rem'}}/></div>}
+                            )) : <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '8rem', paddingLeft:'20rem' , width:"30%" }}><h1>No posts</h1></div>}
                     </div> :
                         <div className="div">
                             <Share />

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Context } from "../../Context/Context";
 import { format } from "timeago.js";
+import CommentDailog from './commentDailog';
 export default function Post({ post, user }) {
     const [like, setLike] = useState(post.likes.length);
     const [isLiked, setIsLiked] = useState(false);
@@ -49,6 +50,8 @@ export default function Post({ post, user }) {
         }
         postuser();
     }, [post.userId])
+
+
     return (
         <div className='post'>
             <div className='postWrapper'>
@@ -77,7 +80,7 @@ export default function Post({ post, user }) {
                         <span className='postLikeCounter'>{like} Likes</span>
                     </div>
                     <div className="postBottomRight">
-                        <span className='postCommentText'>6 Comments</span>
+                        <CommentDailog/>
                     </div>
                 </div>
             </div>
