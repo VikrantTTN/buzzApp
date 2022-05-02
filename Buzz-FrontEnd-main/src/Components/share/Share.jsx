@@ -34,6 +34,7 @@ export default function Share() {
             let res = await axios.post('/posts' , post);
             setCaption('');
             setLoading(true);
+            setFile(null);
         }catch(err){
             console.log(err.message);
         }
@@ -85,7 +86,7 @@ export default function Share() {
                             <span className='shareOptionText'>Status</span>
                         </div>
                     </div>
-                    <button className='shareButton' type='submit' disabled={caption === '' ? true : false}>Share</button>
+                    <button className='shareButton' type='submit' disabled={(caption === '' && file == null) ? true : false}>Share</button>
                 </form>
             </div>
         </div>

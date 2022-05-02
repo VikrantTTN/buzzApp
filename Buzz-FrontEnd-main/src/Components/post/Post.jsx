@@ -3,7 +3,7 @@ import './post.css';
 import profilePicture from '../../Assests/avatar.jpeg';
 import heart from '../../Assests/heart.png';
 import heartT from '../../Assests/heartT.png';
-import { MoreVert , DeleteForeverOutlined } from '@material-ui/icons';
+import { MoreVert, DeleteForeverOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Context } from "../../Context/Context";
@@ -59,9 +59,11 @@ export default function Post({ post, user }) {
                         <span className='postUsername' >{postUser.name}</span>
                         <span className='postDate'>2 min ago</span>
                     </div>
-                    <div className="postTopRight">
-                         <DeleteForeverOutlined onClick={deletePost}/>
-                    </div>
+                    {
+                        user._id == post.userId ? <div className="postTopRight">
+                            <DeleteForeverOutlined onClick={deletePost} />
+                        </div> : null
+                    }
                 </div>
                 <div className='postCenter'>
                     <span className='postText'> {post.caption} </span>
