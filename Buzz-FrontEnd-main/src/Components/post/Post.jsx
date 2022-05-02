@@ -7,6 +7,7 @@ import { MoreVert, DeleteForeverOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Context } from "../../Context/Context";
+import { format } from "timeago.js";
 export default function Post({ post, user }) {
     const [like, setLike] = useState(post.likes.length);
     const [isLiked, setIsLiked] = useState(false);
@@ -57,7 +58,7 @@ export default function Post({ post, user }) {
                             <img className='postProfileImg' src={postUser.profileImg ? path + postUser.profileImg : profilePicture} />
                         </Link>
                         <span className='postUsername' >{postUser.name}</span>
-                        <span className='postDate'>2 min ago</span>
+                        <span className="postDate">{format(post.createdAt)}</span>
                     </div>
                     {
                         user._id == post.userId ? <div className="postTopRight">
