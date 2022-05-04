@@ -10,6 +10,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function CommentDailog() {
   const [open, setOpen] = React.useState(false);
 
+  const [comments , setComments] = React.useState([])
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -20,8 +22,8 @@ export default function CommentDailog() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
-        Comments
+      <Button color='secondary' onClick={handleClickOpen}>
+        0 Comments
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth ={true}>
         <DialogTitle>Comments</DialogTitle>
@@ -29,18 +31,35 @@ export default function CommentDailog() {
           <DialogContentText>
             //Comment will be here 
           </DialogContentText>
+
+          <DialogContentText>
+            //Comment will be here 
+          </DialogContentText>
+
+
+          <DialogContentText margin="dense">
+            //Comment will be here 
+          </DialogContentText>
+
+          <DialogContentText margin="dense">
+            //Comment will be here 
+          </DialogContentText>
+
+          <div className="text-filled" style={{display:'flex' , justifyContext:'center' , alignItem :'center' , marginTop:'15px'}}>
           <TextField
             autoFocus
-            margin="dense"
             id="name"
             label="Enter Comment"
             type="text"
             fullWidth
-            variant="standard"
+            size='small'
+            variant="outlined"
+            color='secondary'
           />
+          <Button color='secondary' onClick={handleClose}>Post</Button>
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Post</Button>
         </DialogActions>
       </Dialog>
     </div>
