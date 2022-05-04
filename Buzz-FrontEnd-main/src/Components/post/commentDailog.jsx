@@ -9,8 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function CommentDailog() {
   const [open, setOpen] = React.useState(false);
-
-  const [comments , setComments] = React.useState([])
+  const [allComment , setallComment] = React.useState([])
+  const [comment , setComment] = React.useState('')
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,6 +18,7 @@ export default function CommentDailog() {
 
   const handleClose = () => {
     setOpen(false);
+   
   };
 
   return (
@@ -55,6 +56,7 @@ export default function CommentDailog() {
             size='small'
             variant="outlined"
             color='secondary'
+            onChange={(e)=>{setComment(e.target.value)}}
           />
           <Button color='secondary' onClick={handleClose}>Post</Button>
           </div>
