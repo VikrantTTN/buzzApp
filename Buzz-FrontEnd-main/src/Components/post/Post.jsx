@@ -33,7 +33,6 @@ export default function Post({ post, user }) {
 
     const handleClick = async () => {
         let res = await axios.patch('/posts/' + post._id + '/like');
-        console.log(res);
         setLike(isLiked ? like - 1 : like + 1);
         setIsLiked(!isLiked)
     }

@@ -13,47 +13,52 @@ export default function CommentDailog({ post }) {
   const [allComment, setallComment] = React.useState([]);
   const [comment, setComment] = React.useState('');
 
+  React.useEffect(() => {
+    (async function fetchComments() {
+      const res = await axios.get('/posts/comments/' + post._id);
+      setallComment([...res.data])
+    })();
+  }, [post])
 
-  
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = async () => {
+  const handleClose = ()=>{
     setOpen(false);
+  }
+
+  const handleClick = async () => {
     let objComment = {
       comment,
       post: post._id
     }
     const res = await axios.post('/posts/comments', objComment);
-   // console.log(res.data);
+    // console.log(res.data);
   };
 
   return (
     <div>
       <Button color='secondary' onClick={handleClickOpen}>
-        0 Comments
+        {allComment.length} Comments
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth={true}>
         <DialogTitle>Comments</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            (//Comment will be here )
-          </DialogContentText>
 
-          <DialogContentText>
-            (//Comment will be here )
-          </DialogContentText>
-
-
-          <DialogContentText margin="dense">
-            //Comment will be here
-          </DialogContentText>
-
-          <DialogContentText margin="dense">
-            //Comment will be here
-          </DialogContentText>
+          {
+            allComment.map((c) => (
+              <div className="commentCont" style={{padding:'5px'}} key={c._id}>
+                <DialogContentText>
+                {
+                  c.comment
+                }
+              </DialogContentText>
+                <hr></hr>
+              </div>
+            ))
+          }
 
           <div className="text-filled" style={{ display: 'flex', justifyContext: 'center', alignItem: 'center', marginTop: '15px' }}>
             <TextField
@@ -67,7 +72,7 @@ export default function CommentDailog({ post }) {
               color='secondary'
               onChange={(e) => { setComment(e.target.value) }}
             />
-            <Button color='secondary' disabled={comment.length === 0} onClick={handleClose}>Post</Button>
+            <Button color='secondary' disabled={comment.length === 0} onClick={handleClick}>Post</Button>
           </div>
         </DialogContent>
         <DialogActions>

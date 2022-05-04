@@ -33,9 +33,8 @@ commentSchema.pre(/^find/,function(next){
     this.populate({
         path:'user',
         select:'name profileImg'
-    }).populate({
-        path:'post'
     });
+
     next();
 })
 

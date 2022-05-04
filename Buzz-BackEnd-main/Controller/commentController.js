@@ -1,7 +1,7 @@
 const commentModel = require('../Model/commentModel');
 
 async function createComment(req, res) {
-    console.log('createComment called');
+    //console.log('createComment called');
     try {
         let { comment, post, } = req.body;
         let user = req.id;
@@ -19,12 +19,16 @@ async function createComment(req, res) {
 }
 
 async function getComments(req, res) {
-    console.log('getComments called');
+    //console.log('getComments called');
     try {
-        let postId = req.params
-        const postComments = await commentModel.find({ postId });
-        res.json(postComments);
-    } catch {
+        let {id} = req.params;
+        const postComments = await commentModel.find({ post:id });
+        if(postComments){
+            res.json(postComments);
+        }else{
+            res.json("comment not found")
+        }
+    } catch(err) {
         res.status(500).json(err.message);
     }
 

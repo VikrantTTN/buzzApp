@@ -16,7 +16,7 @@ postRouter
 postRouter.get('/feedPosts',feedsPost);
 postRouter.get('/userPosts' , userPost);
 postRouter.get('/userPosts/:id',userPostById)
-postRouter.get('/comments/:postId', getComments)
+postRouter.get('/comments/:id', getComments)
 postRouter.post('/comments' , createComment)
 
 
