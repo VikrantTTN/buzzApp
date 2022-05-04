@@ -4,7 +4,7 @@ const db_link = "mongodb+srv://admin:qs4MdZxej78Hh3Uy@cluster0.floao.mongodb.net
 
 mongoose.connect(db_link)
     .then((db) => {
-        console.log("posts db connect");
+        console.log("comments db connect");
     }).catch((err) => {
         console.log(err);
 })
@@ -29,14 +29,16 @@ const commentSchema = mongoose.Schema({
 
 // find  findById findOne
 
-reviewSchema.pre(/^find/,function(next){
+commentSchema.pre(/^find/,function(next){
     this.populate({
         path:'user',
-        select:'name profileImage'
+        select:'name profileImg'
     }).populate({
         path:'post'
     });
     next();
 })
 
-const commentModel = mongoose.model('commentModel' , commentSchema );
+const commentModel = mongoose.model('commentModel' , commentSchema , "Buzz comments" );
+
+module.exports = commentModel ;

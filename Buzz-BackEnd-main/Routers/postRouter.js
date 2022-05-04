@@ -1,11 +1,13 @@
 const express = require('express');
 const postRouter = express.Router();
 const {createPost , updatePost , deletePost , likePost ,getPost , feedsPost,userPost , userPostById} = require('../Controller/postController');
+const {createComment , getComments} = require('../Controller/commentController');
 const protectedRoute = require('../Middleware/protectedRoute');
 
 
 
 postRouter.use(protectedRoute)
+
 
 postRouter
 .route('/')
@@ -14,6 +16,9 @@ postRouter
 postRouter.get('/feedPosts',feedsPost);
 postRouter.get('/userPosts' , userPost);
 postRouter.get('/userPosts/:id',userPostById)
+postRouter.get('/comments/:postId', getComments)
+postRouter.post('/comments' , createComment)
+
 
 postRouter
 .route('/:id')
@@ -24,6 +29,7 @@ postRouter
 postRouter
 .route('/:id/like')
 .patch(likePost)
+
 
 
 module.exports = postRouter;
