@@ -25,7 +25,6 @@ export default function CommentDailog({ post }) {
       setLoading(false)
     })();
   }, [post, loading])
-  console.log(allComment);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -58,20 +57,20 @@ export default function CommentDailog({ post }) {
           {
             allComment.length !== 0 ?
               !loading ? allComment.map((c) => (
-                <div className="commentCont" style={{ padding: '5px', display: 'flex' , justifyContent:'flex-start' , }} key={c._id}>
+                <div className="commentCont" style={{ padding: '5px', display: 'flex' , justifyContent:'flex-start' }} key={c._id}>
 
                   <div className="commentPic" style={{ }}>
                     <img style={{objectFit: "cover" ,height: '40px',width: '40px' ,borderRadius:"50% "}} src={c.user.profileImg ? path + c.user.profileImg : avatar} alt="" />
                   </div>
 
-                  <div className="commentText" style={{padding:'11px'}}>
+                  <div className="commentText" style={{padding:'11px' , width:'100%',borderBottom:'0.5px solid #bdc3c7'}}>
                     <DialogContentText>
                       {
                         c.comment
                       }
                     </DialogContentText>
                   </div>
-
+                      
                 </div>
               )) :
                 <div className="loading" style={{ display: 'flex', justifyContent: 'center' }}>
