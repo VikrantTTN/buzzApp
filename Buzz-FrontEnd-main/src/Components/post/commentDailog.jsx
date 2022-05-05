@@ -9,12 +9,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
-
+import avatar from '../../Assests/avatar.jpeg'
+import { lineHeight } from '@mui/system';
 export default function CommentDailog({ post }) {
   const [open, setOpen] = React.useState(false);
   const [allComment, setallComment] = React.useState([]);
   const [comment, setComment] = React.useState('');
-  const [loading , setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(true);
+  const path = process.env.REACT_APP_PUBLIC_FOLDER;
 
   React.useEffect(() => {
     (async function fetchComments() {
@@ -22,8 +24,8 @@ export default function CommentDailog({ post }) {
       setallComment([...res.data])
       setLoading(false)
     })();
-  }, [post , loading])
-
+  }, [post, loading])
+  console.log(allComment);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,30 +52,37 @@ export default function CommentDailog({ post }) {
         {allComment.length} Comments
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth={true}>
-        <DialogTitle size= 'small'><h2>Comments</h2></DialogTitle>
+        <DialogTitle sx={{lineHeight:0}} size='small'><h2>Comments</h2></DialogTitle>
         <DialogContent>
 
-         {
-           allComment.length !== 0 ?  
-            !loading ? allComment.map((c) => (
-              <div className="commentCont" style={{padding:'5px'}} key={c._id}>
-                <DialogContentText>
-                {
-                  c.comment
-                }
-              </DialogContentText>
-                <hr></hr>
+          {
+            allComment.length !== 0 ?
+              !loading ? allComment.map((c) => (
+                <div className="commentCont" style={{ padding: '5px', display: 'flex' , justifyContent:'flex-start' , }} key={c._id}>
+
+                  <div className="commentPic" style={{ }}>
+                    <img style={{objectFit: "cover" ,height: '40px',width: '40px' ,borderRadius:"50% "}} src={c.user.profileImg ? path + c.user.profileImg : avatar} alt="" />
+                  </div>
+
+                  <div className="commentText" style={{padding:'11px'}}>
+                    <DialogContentText>
+                      {
+                        c.comment
+                      }
+                    </DialogContentText>
+                  </div>
+
+                </div>
+              )) :
+                <div className="loading" style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Stack sx={{ color: 'grey.500' }} spacing={2} direction="row">
+                    <CircularProgress color="secondary" />
+                  </Stack>
+                </div>
+              : <div className="noComent" style={{ display: 'flex', justifyContent: 'center' }}>
+                <h2>No Comments</h2>
               </div>
-            )) : 
-            <div className="loading" style={{display:'flex' , justifyContent:'center'}}>
-            <Stack sx={{ color: 'grey.500'  }} spacing={2} direction="row">
-            <CircularProgress color="secondary" />
-          </Stack>
-            </div>
-           : <div className="noComent" style={{display:'flex' , justifyContent:'center'}}>
-             <h2>No Comments</h2>
-          </div>
-         }
+          }
 
           <div className="text-filled" style={{ display: 'flex', justifyContext: 'center', alignItem: 'center', marginTop: '15px' }}>
             <TextField
