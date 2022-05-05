@@ -8,16 +8,16 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
+import {ClearOutlined} from '@material-ui/icons';
 import axios from 'axios';
 import avatar from '../../Assests/avatar.jpeg'
-import { lineHeight } from '@mui/system';
-export default function CommentDailog({ post }) {
+export default function CommentDailog({ post , user }) {
   const [open, setOpen] = React.useState(false);
   const [allComment, setallComment] = React.useState([]);
   const [comment, setComment] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const path = process.env.REACT_APP_PUBLIC_FOLDER;
-
+  console.log(allComment);
   React.useEffect(() => {
     (async function fetchComments() {
       const res = await axios.get('/posts/comments/' + post._id);
@@ -63,12 +63,19 @@ export default function CommentDailog({ post }) {
                     <img style={{objectFit: "cover" ,height: '40px',width: '40px' ,borderRadius:"50% "}} src={c.user.profileImg ? path + c.user.profileImg : avatar} alt="" />
                   </div>
 
-                  <div className="commentText" style={{padding:'11px' , width:'100%',borderBottom:'0.5px solid #bdc3c7'}}>
+                  <div className="commentText" style={{padding:'11px' , width:'100%',borderBottom:'0.5px solid #bdc3c7', display:'flex' , justifyContent:'space-between'}}>
                     <DialogContentText>
                       {
                         c.comment
                       }
                     </DialogContentText>
+
+                    {
+                      user._id === post.userId || user._id === c.user._id ?  <div className="deleteBtn">
+                     <ClearOutlined/>
+                      </div> : null
+                    }
+
                   </div>
                       
                 </div>

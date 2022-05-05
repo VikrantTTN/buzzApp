@@ -79,7 +79,7 @@ export default function Post({ post, user }) {
                         <span className='postLikeCounter'>{like} Likes</span>
                     </div>
                     <div className="postBottomRight">
-                        <CommentDailog post={post}/>
+                        <CommentDailog post={post } user={user}/>
                     </div>
                 </div>
             </div>
