@@ -36,7 +36,7 @@ async function getComments(req, res) {
 
 async function deleteComment(req , res){
     try{
-        const {commentId} = req.body;
+        const {commentId} = req.params;
         let comment = await commentModel.findById(commentId);
         if(comment){
             await comment.deleteOne();

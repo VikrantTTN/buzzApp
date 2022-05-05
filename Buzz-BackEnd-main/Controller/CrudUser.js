@@ -60,7 +60,7 @@ async function deleteUser(req, res) {
 // get user
 
 async function getUserById(req, res) {
-    console.log("getUserById called");
+    //console.log("getUserById called");
     try {
         let id = req.params.id;
         let user = await userModel.findById(id).lean();

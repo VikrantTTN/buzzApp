@@ -13,14 +13,14 @@ export default function Feed({ profile, friend_id }) {
         const fetchPosts = async () => {
             let res;
             if (!profile) {
-                console.log("no profile");
+                //console.log("no profile");
                 res = await axios.get('/posts/feedposts');
             } else if (profile && friend_id) {
-                console.log("profile with friend id");
+                //console.log("profile with friend id");
                 res = await axios.get('/posts/userPosts/' + friend_id);
             }
             else {
-                console.log(" only profile");
+                //console.log(" only profile");
                 res = await axios.get('/posts/userPosts');
             }
             setPosts([...res.data.sort((post1, post2) => {

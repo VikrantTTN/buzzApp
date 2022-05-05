@@ -18,7 +18,7 @@ postRouter.get('/userPosts' , userPost);
 postRouter.get('/userPosts/:id',userPostById);
 postRouter.get('/comments/:id', getComments);
 postRouter.post('/comments' , createComment);
-postRouter.delete('/comments',deleteComment);
+postRouter.delete('/comments/:commentId',deleteComment);
 
 postRouter
 .route('/:id')

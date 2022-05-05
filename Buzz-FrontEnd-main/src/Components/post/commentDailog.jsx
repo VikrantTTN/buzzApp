@@ -17,7 +17,6 @@ export default function CommentDailog({ post , user }) {
   const [comment, setComment] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const path = process.env.REACT_APP_PUBLIC_FOLDER;
-  console.log(allComment);
   React.useEffect(() => {
     (async function fetchComments() {
       const res = await axios.get('/posts/comments/' + post._id);
@@ -39,15 +38,15 @@ export default function CommentDailog({ post , user }) {
       comment,
       post: post._id
     }
-    const res = await axios.post('/posts/comments', objComment);
+    await axios.post('/posts/comments', objComment);
     setLoading(true);
     setComment('');
     // console.log(res.data);
   };
-  console.log(allComment);
 
-  const handleDelete = async ()=>{
-    
+  const handleDelete = async (id)=>{
+    await axios.delete('/posts/comments/' + id);
+    setLoading(true);
   }
   return (
     <div>
@@ -55,7 +54,7 @@ export default function CommentDailog({ post , user }) {
         {allComment.length} Comments
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth={true}>
-        <DialogTitle sx={{lineHeight:0}} size='small'><h2>Comments</h2></DialogTitle>
+        <DialogTitle sx={{lineHeight:0}} size='large'><div className="heading"><h2>Comments</h2></div></DialogTitle>
         <DialogContent>
 
           {
@@ -76,7 +75,7 @@ export default function CommentDailog({ post , user }) {
 
                     {
                       user._id === post.userId || user._id === c.user._id ?  <div className="deleteBtn">
-                     <ClearOutlined onClick={handleDelete}/>
+                     <ClearOutlined onClick={()=>handleDelete(c._id)}/>
                       </div> : null
                     }
 
