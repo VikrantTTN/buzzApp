@@ -44,7 +44,11 @@ export default function CommentDailog({ post , user }) {
     setComment('');
     // console.log(res.data);
   };
+  console.log(allComment);
 
+  const handleDelete = async ()=>{
+    
+  }
   return (
     <div>
       <Button color='secondary' onClick={handleClickOpen}>
@@ -72,7 +76,7 @@ export default function CommentDailog({ post , user }) {
 
                     {
                       user._id === post.userId || user._id === c.user._id ?  <div className="deleteBtn">
-                     <ClearOutlined/>
+                     <ClearOutlined onClick={handleDelete}/>
                       </div> : null
                     }
 

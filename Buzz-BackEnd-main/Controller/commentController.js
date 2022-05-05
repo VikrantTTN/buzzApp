@@ -34,7 +34,23 @@ async function getComments(req, res) {
 
 }
 
+async function deleteComment(req , res){
+    try{
+        const {commentId} = req.body;
+        let comment = await commentModel.findById(commentId);
+        if(comment){
+            await comment.deleteOne();
+            res.status(200).json("comment has been deleted");
+        }else{
+            res.status(200).json("comment not found")
+        }
+    }catch(err){
+        res.send(500).json(err.message)
+    }
+}
+
 module.exports = {
     createComment,
-    getComments
+    getComments,
+    deleteComment
 }
